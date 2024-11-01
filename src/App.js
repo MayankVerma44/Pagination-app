@@ -73,7 +73,6 @@ const EmployeeTable = () => {
       <div className="pagination">
         <button
           onClick={handlePrevious}
-          disabled={currentPage === 1}
           data-testid="previous-button"
         >
           Previous
