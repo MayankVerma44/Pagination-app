@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css'
+import './App.css';
 
 const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
@@ -15,6 +15,7 @@ const EmployeeTable = () => {
           'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json'
         );
         setEmployees(response.data);
+        setCurrentPage(1); // Reset to page 1 whenever data is fetched
       } catch (error) {
         setError('Failed to fetch data');
         alert('Failed to fetch data');
@@ -32,13 +33,13 @@ const EmployeeTable = () => {
 
   const handlePrevious = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      setCurrentPage((prevPage) => prevPage - 1);
     }
   };
 
   const handleNext = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      setCurrentPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -73,13 +74,15 @@ const EmployeeTable = () => {
         <button
           onClick={handlePrevious}
           disabled={currentPage === 1}
+          data-testid="previous-button"
         >
           Previous
         </button>
-        <span>Page {currentPage}</span>
+        <span>Page {currentPage} </span>
         <button
           onClick={handleNext}
           disabled={currentPage === totalPages}
+          data-testid="next-button"
         >
           Next
         </button>
